@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Image Preview Opener</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Multiple Image Preview Opener</h1>
+        <textarea id="image-urls" placeholder="Enter image URLs separated by commas or new lines"></textarea>
+        <button id="add-urls">Add Images</button>
+        <div id="preview-container" class="preview-container"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    text-align: center;
+    width: auto;
+    max-width: auto;
+}
+
+textarea {  
+    width: 80%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    resize: none;
+}
+
+        button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.preview-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;                    
+}
+
+.preview-container img {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+}
+
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const imageUrlsTextArea = document.getElementById('image-urls');
+    const addUrlsButton = document.getElementById('add-urls');
+    const previewContainer = document.getElementById('preview-container');
+
+    addUrlsButton.addEventListener('click', () => {
+        const urls = imageUrlsTextArea.value
+            .split(/[\n,]/)  // Split by new lines or commas
+            .map(url => url.trim())
+            .filter(url => url !== ''); // Remove any empty strings
+
+        previewContainer.innerHTML = ''; // Clear previous previews
+
+        urls.forEach(url => {
+            const img = document.createElement('img');    
+            img.src = url;
+            img.alt = 'Image preview';
+            img.onerror = () => {
+                img.src = 'https://via.placeholder.com/150?text=Invalid+URL';
+            };
+            previewContainer.appendChild(img);
+        });
+
+        imageUrlsTextArea.value = '';
+        imageUrlsTextArea.focus();
+    });
+
+    imageUrlsTextArea.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) { // Allow multi-line input with shift + enter
+            e.preventDefault(); // Prevent default action (newline)
+            addUrlsButton.click();
+        }
+    });
+});
+        
+</script>
