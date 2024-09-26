@@ -123,18 +123,18 @@ transform: scale(1.2);
 }
 
 .developer-name {
-    margin-top: 20px;
-    font-size: 16px;
+    margin-top: 28px;
+    font-size: 28px;
 }
 
 .developer-name a {
-    color: #1abc9c;
+    color: #445ce3;
     text-decoration: none;
     transition: color 0.3s;
 }
 
 .developer-name a:hover {
-    text-decoration: underline;
+    text-decoration: none;
     color: #16a085;
 }
 
